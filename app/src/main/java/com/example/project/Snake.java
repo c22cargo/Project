@@ -2,12 +2,12 @@ package com.example.project;
 
 public class Snake {
 
-    private double maximumLength;
-    private double averageLength;
+    private int maximumLength;
+    private int averageLength;
 
     private String name;
 
-    public Snake(double maximumLength, double averageLength, String name) {
+    public Snake(int maximumLength, int averageLength, String name) {
         this.maximumLength = maximumLength;
         this.averageLength = averageLength;
         this.name = name;
