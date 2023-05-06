@@ -1,8 +1,11 @@
 package com.example.project;
 
-public class Snake {
+import com.google.gson.annotations.SerializedName;
 
+public class Snake {
+    @SerializedName("cost")
     private int maximumLength;
+    @SerializedName("size")
     private int averageLength;
 
     private String name;

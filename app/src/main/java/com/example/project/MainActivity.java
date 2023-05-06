@@ -5,18 +5,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-    ArrayList<Snake> items = new ArrayList<>(Arrays.asList(
-            new Snake(1, 4, "xd"),
-            new Snake(2, 5, "xdd"),
-            new Snake(3, 6, "xddd")
-    ));
+public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
+
+    private Gson gson = new Gson();
+
+    private ArrayList<Snake> items = new ArrayList<>();
 
     private RecyclerViewAdapter adapter;
 
@@ -30,5 +31,17 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView view = findViewById(R.id.recycler_view);
         view.setLayoutManager(new LinearLayoutManager(this));
         view.setAdapter(adapter);
+
+        new JsonTask(this).execute("https://mobprog.webug.se/json-api?login=c22cargo");
+    }
+
+    @Override
+    public void onPostExecute(String json) {
+        Type type = new TypeToken<List<Snake>>() {
+        }.getType();
+        items = gson.fromJson(json, type);
+
+        adapter.setItems(items);
+        adapter.notifyDataSetChanged();
     }
 }
