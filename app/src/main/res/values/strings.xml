@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Project</string>
+    <string name="about">Denna app är riktad mot människor som vill veta vilka ormar som är längst i världen. </string>
 </resources>
