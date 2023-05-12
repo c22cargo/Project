@@ -30,7 +30,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mountain.setText(items.get(position).toString());
+        holder.name.setText("Name: " + items.get(position).getName());
+        holder.avgLength.setText("Average Length: " + String.valueOf(items.get(position).getAverageLength()) + " Meters");
+        holder.maxLength.setText("Maximum Length: " + String.valueOf(items.get(position).getMaximumLength()) + " Meters");
     }
 
     @Override
@@ -39,11 +41,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mountain;
+        private TextView name;
+        private TextView avgLength;
+        private TextView maxLength;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mountain = itemView.findViewById(R.id.snake);
+            name = itemView.findViewById(R.id.snakeName);
+            avgLength = itemView.findViewById(R.id.snakeAvgLength);
+            maxLength = itemView.findViewById(R.id.snakeMaxLength);
         }
     }
 

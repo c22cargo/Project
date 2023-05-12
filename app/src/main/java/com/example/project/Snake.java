@@ -16,6 +16,18 @@ public class Snake {
         this.name = name;
     }
 
+    public int getMaximumLength() {
+        return maximumLength;
+    }
+
+    public int getAverageLength() {
+        return averageLength;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Snake{" +
