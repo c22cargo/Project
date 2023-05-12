@@ -10,10 +10,13 @@ public class Snake {
 
     private String name;
 
-    public Snake(int maximumLength, int averageLength, String name) {
+    private String auxdata;
+
+    public Snake(int maximumLength, int averageLength, String name, String auxdata) {
         this.maximumLength = maximumLength;
         this.averageLength = averageLength;
         this.name = name;
+        this.auxdata = auxdata;
     }
 
     public int getMaximumLength() {
@@ -26,6 +29,10 @@ public class Snake {
 
     public String getName() {
         return name;
+    }
+
+    public String getauxdata() {
+        return auxdata;
     }
 
     @Override

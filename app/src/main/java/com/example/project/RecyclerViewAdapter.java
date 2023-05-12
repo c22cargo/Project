@@ -15,11 +15,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private List<Snake> items;
     private LayoutInflater layoutInflater;
+    private OnClickListener onClickListener;
 
 
-    public RecyclerViewAdapter(Context context, List<Snake> items) {
+    public RecyclerViewAdapter(Context context, List<Snake> items, OnClickListener onClickListener) {
         this.layoutInflater = LayoutInflater.from(context);
         this.items = items;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -40,17 +42,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return items.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView name;
         private TextView avgLength;
         private TextView maxLength;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             name = itemView.findViewById(R.id.snakeName);
             avgLength = itemView.findViewById(R.id.snakeAvgLength);
             maxLength = itemView.findViewById(R.id.snakeMaxLength);
         }
+
+        @Override
+        public void onClick(View view) {
+            onClickListener.onClick(items.get(getAdapterPosition()));
+        }
+    }
+
+    public interface OnClickListener {
+        void onClick(Snake item);
     }
 
     public void setItems(List<Snake> items) {

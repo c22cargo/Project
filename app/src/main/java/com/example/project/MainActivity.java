@@ -29,7 +29,15 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adapter = new RecyclerViewAdapter(this, items);
+        adapter = new RecyclerViewAdapter(this, items, new RecyclerViewAdapter.OnClickListener() {
+            @Override
+            public void onClick(Snake item) {
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                intent.putExtra("image", item.getauxdata());
+                intent.putExtra("name", item.getName());
+                startActivity(intent);
+            }
+        });
 
         RecyclerView view = findViewById(R.id.recycler_view);
         view.setLayoutManager(new LinearLayoutManager(this));

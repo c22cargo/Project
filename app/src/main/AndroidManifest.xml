@@ -14,9 +14,13 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
+            android:name=".DetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".AboutActivity"
             android:exported="false"
-            android:parentActivityName="com.example.project.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
