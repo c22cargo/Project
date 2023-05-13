@@ -25,8 +25,11 @@ public class DetailsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String image = extras.getString("image");
-            if (image.length() > 0) {
+
+            try {
                 Picasso.get().load(image).into(snakeImage);
+            }
+            catch(Exception e) {
             }
 
             String name = extras.getString("name");
