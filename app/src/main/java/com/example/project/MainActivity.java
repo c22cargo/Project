@@ -5,11 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -25,11 +27,16 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     private ArrayList<Snake> items = new ArrayList<>();
 
     private RecyclerViewAdapter adapter;
+    private SharedPreferences sharedPreferences;
+    private TextView filterText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = getSharedPreferences("filter", MODE_PRIVATE);
+        filterText = findViewById(R.id.filterText);
 
         adapter = new RecyclerViewAdapter(this, items, new RecyclerViewAdapter.OnClickListener() {
             @Override
@@ -64,30 +71,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
                 filterPopUp.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        ArrayList<Snake> filteredItems = new ArrayList<>();
-                        switch (menuItem.getItemId()) {
-                            case R.id.noFilter:
-                                updateItems(items);
-                                return true;
-                            case R.id.avgOver4:
-                                for (Snake snake : items){
-                                    if (snake.getAverageLength() > 4) {
-                                        filteredItems.add(snake);
-                                    };
-                                }
-                                updateItems(filteredItems);
-                                return true;
-                            case R.id.maxOver6:
-                                for (Snake snake : items){
-                                    if (snake.getMaximumLength() > 6) {
-                                        filteredItems.add(snake);
-                                    };
-                                }
-                                updateItems(filteredItems);
-                                return true;
-                            default:
-                                return false;
-                        }
+                        filterItems(menuItem.toString());
+                        return false;
                     }
                 });
                 filterPopUp.show();
@@ -103,11 +88,40 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         }.getType();
         items = gson.fromJson(json, type);
 
-        updateItems(items);
+        filterItems(sharedPreferences.getString("filter", "No Filter"));
     }
 
     private void updateItems(ArrayList list){
         adapter.setItems(list);
         adapter.notifyDataSetChanged();
+    }
+
+    private void filterItems(String filterType){
+        ArrayList<Snake> filteredItems = new ArrayList<>();
+        switch (filterType) {
+            case "No Filter":
+                sharedPreferences.edit().putString("filter", "No Filter").apply();
+                updateItems(items);
+                break;
+            case "Average length over 4 M":
+                sharedPreferences.edit().putString("filter", "Average length over 4 M").apply();
+                for (Snake snake : items){
+                    if (snake.getAverageLength() > 4) {
+                        filteredItems.add(snake);
+                    };
+                }
+                updateItems(filteredItems);
+                break;
+            case "Maximum length over 6 M":
+                sharedPreferences.edit().putString("filter", "Maximum length over 6 M").apply();
+                for (Snake snake : items){
+                    if (snake.getMaximumLength() > 6) {
+                        filteredItems.add(snake);
+                    };
+                }
+                updateItems(filteredItems);
+                break;
+        }
+        filterText.setText("Filter: " + filterType);
     }
 }

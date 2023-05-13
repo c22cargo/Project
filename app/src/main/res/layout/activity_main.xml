@@ -34,4 +34,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/aboutButton" />
 
+    <TextView
+        android:id="@+id/filterText"
+        android:layout_width="155dp"
+        android:layout_height="41dp"
+        android:text="Filter: No Filter"
+        android:gravity="center"
+        android:maxLength="35"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/aboutButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
