@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
                         ArrayList<Snake> filteredItems = new ArrayList<>();
                         switch (menuItem.getItemId()) {
                             case R.id.noFilter:
-                                adapter.setItems(items);
-                                adapter.notifyDataSetChanged();
-                                System.out.println("TESTEST");
+                                updateItems(items);
                                 return true;
                             case R.id.avgOver4:
                                 for (Snake snake : items){
@@ -77,8 +75,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
                                         filteredItems.add(snake);
                                     };
                                 }
-                                adapter.setItems(filteredItems);
-                                adapter.notifyDataSetChanged();
+                                updateItems(filteredItems);
                                 return true;
                             case R.id.maxOver6:
                                 for (Snake snake : items){
@@ -86,8 +83,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
                                         filteredItems.add(snake);
                                     };
                                 }
-                                adapter.setItems(filteredItems);
-                                adapter.notifyDataSetChanged();
+                                updateItems(filteredItems);
                                 return true;
                             default:
                                 return false;
@@ -107,7 +103,11 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         }.getType();
         items = gson.fromJson(json, type);
 
-        adapter.setItems(items);
+        updateItems(items);
+    }
+
+    private void updateItems(ArrayList list){
+        adapter.setItems(list);
         adapter.notifyDataSetChanged();
     }
 }
